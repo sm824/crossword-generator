@@ -8,8 +8,6 @@ Purpose: This is a library of functions and constants, the uses of which cannot 
 """
 import easygui_qt as easy
 
-
-
 ORIENTATION_OPTIONS = ("vertical", "horizontal")  # The options to choose from for each word, when its orientation is being decided
 
 BLANK_CHAR = "*"  # The character used in the CrosswordGrid objects to denote a space that is not part of a word
