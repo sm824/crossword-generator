@@ -15,18 +15,48 @@ class MainWindow:
     
     def run_options(self):
 
-        # Sizes the window to the proper dimensions for starting to set options
-        self.root.geometry("600x400")
-
         # Creates the needed UI components
-        self.added_words = []
+        self.word_entries = []
 
+        # Creates and adds the 'add word entry' button
         self.add_word_btn = tk.Button(
-            text = "Add\nWord",
+            text = "+",
+            font = (UI_FONT[0], 30),
+            cursor = "hand2",
+            command = lambda: self.add_word_entry,
+            width = 3
+        )
+        self.padded_grid(self.add_word_btn, 1, 0)
+
+        # Creates an invisible label to put space between the other header widgets
+        self.header_space_label = tk.Label(
+            width = 12
+        )
+        self.header_space_label.grid(row = 0, column = 0)
+
+        # Creates and adds the generate crossword button
+        self.generate_btn = tk.Button(
+            text = "Generate Crossword",
             font = UI_FONT,
-            fg = self.main_color,
-            command = lambda: self.added_words.append(tk.Label())
-                              #
+            cursor = "hand2",
+            height = 2,
+            #command = 
+        )
+        self.padded_grid(self.generate_btn, 2, 0)
+
+        # Creates and adds the frame for the word entry widgets to sit in
+        self.entries_frame = tk.Frame(
+            bg = "white",
+            cursor = "hand2",
+            width = 600,
+            height = 400,
+            relief = tk.RAISED
+        )
+        self.entries_frame.grid(
+            column = 0,
+            row = 1,
+            columnspan = 3,
+            padx = UI_PADDING
         )
         
     def run_crossword(self):
@@ -34,3 +64,14 @@ class MainWindow:
         pass
 
         # Sizes the window to the proper dimensions to fit the crossword
+    
+    def add_word_entry():
+        pass
+
+    def padded_grid(self, widget, column, row):
+        widget.grid(
+            padx = UI_PADDING,
+            pady = UI_PADDING,
+            row = row,
+            column = column,
+        )
