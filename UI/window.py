@@ -28,12 +28,6 @@ class MainWindow:
         )
         self.padded_grid(self.add_word_btn, 1, 0)
 
-        # Creates an invisible label to put space between the other header widgets
-        self.header_space_label = tk.Label(
-            width = 12
-        )
-        self.header_space_label.grid(row = 0, column = 0)
-
         # Creates and adds the generate crossword button
         self.generate_btn = tk.Button(
             text = "Generate Crossword",
@@ -42,20 +36,20 @@ class MainWindow:
             height = 2,
             #command = 
         )
-        self.padded_grid(self.generate_btn, 2, 0)
+        self.padded_grid(self.generate_btn, 0, 0)
 
         # Creates and adds the frame for the word entry widgets to sit in
         self.entries_frame = tk.Frame(
             bg = "white",
             cursor = "hand2",
-            width = 600,
+            width = 400,
             height = 400,
             relief = tk.RAISED
         )
         self.entries_frame.grid(
             column = 0,
             row = 1,
-            columnspan = 3,
+            columnspan = 2,
             padx = UI_PADDING
         )
         
