@@ -7,7 +7,9 @@ class MainWindow:
     def __init__(self, RGB_colors):
 
         self.window_mode = "options"
-        self.main_color = "#%02x%02x%02x" % RGB_colors
+        self.main_color = "#%02x%02x%02x" % RGB_colors  # Converts RGB to HEX colors
+        self.entered_words = []
+        UI.word_entry_box.WordEntryBox.box_color = self.main_color
 
         self.root = tk.Tk()
         self.root.title("Crossword Generator")
@@ -23,7 +25,7 @@ class MainWindow:
             text = "+",
             font = (UI_FONT[0], 30),
             cursor = "hand2",
-            command = lambda: self.add_word_entry,
+            command = self.add_word_entry,
             width = 3
         )
         self.padded_grid(self.add_word_btn, 1, 0)
@@ -41,10 +43,7 @@ class MainWindow:
         # Creates and adds the frame for the word entry widgets to sit in
         self.entries_frame = tk.Frame(
             bg = "white",
-            cursor = "hand2",
-            width = 400,
-            height = 400,
-            relief = tk.RAISED
+            cursor = "hand2"
         )
         self.entries_frame.grid(
             column = 0,
@@ -59,8 +58,16 @@ class MainWindow:
 
         # Sizes the window to the proper dimensions to fit the crossword
     
-    def add_word_entry():
-        pass
+    def add_word_entry(self):
+
+        self.entered_words.append(
+            UI.word_entry_box.WordEntryBox(
+                placement_row = len(self.entered_words),
+                master = self.entries_frame
+            )
+        )
+
+        print(self.entered_words)
 
     def padded_grid(self, widget, column, row):
         widget.grid(

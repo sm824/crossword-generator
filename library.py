@@ -14,7 +14,7 @@ BLANK_CHAR = "*"  # The character used in the CrosswordGrid objects to denote a 
 
 KEY_WIDTH = 40  # The number of characters long each row of definition text is allowed to be in the formatted key
 
-UI_FONT = ("Georgia", 18)
+UI_FONT = ("Cascadia Mono", 18)
 UI_BORDERWIDTH = 4
 UI_PADDING = 10
 
