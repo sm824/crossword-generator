@@ -9,7 +9,6 @@ class MainWindow:
         self.window_mode = "options"
         self.main_color = "#%02x%02x%02x" % RGB_colors  # Converts RGB to HEX colors
         self.entered_words = []
-        UI.word_entry_box.WordEntryBox.box_color = self.main_color
 
         self.root = tk.Tk()
         self.root.title("Crossword Generator")
@@ -51,7 +50,11 @@ class MainWindow:
             columnspan = 2,
             padx = UI_PADDING
         )
-        
+
+        UI.word_entry_box.WordEntryBox.box_color = self.main_color
+        UI.word_entry_box.WordEntryBox.box_collection = self.entered_words
+        UI.word_entry_box.WordEntryBox.box_frame = self.entries_frame
+
     def run_crossword(self):
 
         pass
@@ -60,9 +63,11 @@ class MainWindow:
     
     def add_word_entry(self):
 
+        placement_row = len(self.entered_words)
+        
         self.entered_words.append(
             UI.word_entry_box.WordEntryBox(
-                placement_row = len(self.entered_words),
+                placement_row = placement_row,
                 master = self.entries_frame
             )
         )

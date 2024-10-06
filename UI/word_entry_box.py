@@ -8,6 +8,8 @@ class WordEntryBox:
 
     box_color = "white"
     reduced_font = (UI_FONT[0], 12)
+    box_collection = None
+    box_frame = None
 
     def __init__(self, master, placement_row):
 
@@ -19,17 +21,20 @@ class WordEntryBox:
             height = WordEntryBox.BOX_HEIGHT
         )
 
-        self.is_deleted = False
+        # Stores this box's index in the collection it is located
+        self.collection_index = placement_row
 
         # Creates the components inside the word entry box
 
         # TITLE
-        self.word_prompt = tk.Label(
+        self.box_title = tk.Label(
             master = self.frame,
             font = UI_FONT,
-            text = f"Word Entry #{placement_row + 1}"
+            text = ""
         )
-        self.word_prompt.grid(
+        self.update_title_string()
+
+        self.box_title.grid(
             column = 0,
             row = 0
         )
@@ -90,7 +95,7 @@ class WordEntryBox:
             font = ("Arial", 15),
             bg = "#e0604c",
             fg = "black",
-            command = self.mark_as_deleted
+            command = self.delete_box
         )
         self.delete_btn.grid(
             column = 2,
@@ -100,18 +105,41 @@ class WordEntryBox:
         )
 
         # Adds the frame box to the window
-        self.frame.grid(
-            padx = UI_PADDING,
-            pady = UI_PADDING,
-            row = placement_row,
-            column = 0
-        )
+        self.refresh_pos()
 
         self.frame.configure(
             height = WordEntryBox.BOX_HEIGHT,
             width = WordEntryBox.BOX_WIDTH
         )
     
-    def mark_as_deleted(self):
-        self.is_deleted = True
+    def refresh_pos(self):
+        
+        self.frame.grid(
+            padx = UI_PADDING,
+            pady = UI_PADDING,
+            row = self.collection_index,
+            column = 0
+        )
     
+    def update_title_string(self):
+
+        self.box_title.config(
+            text = f"Word Entry #{self.collection_index + 1}"
+        )
+
+        self.refresh_pos()
+    
+    def delete_box(self):
+
+        # Destroys this box's main frame
+        self.frame.destroy()
+        
+        # Removes this box from the collection its object is stored in
+        WordEntryBox.box_collection.pop(self.collection_index)
+
+        # Updates the remaining boxes to have accurate numberings
+        for this_box in range(len(WordEntryBox.box_collection)):
+            WordEntryBox.box_collection[this_box].collection_index = this_box
+            WordEntryBox.box_collection[this_box].update_title_string()
+
+        print(f"Deleting entry #{self.collection_index + 1}")
