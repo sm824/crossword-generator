@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 from library import *
 
 class WordEntryBox:
@@ -95,7 +96,7 @@ class WordEntryBox:
             font = ("Arial", 15),
             bg = "#e0604c",
             fg = "black",
-            command = self.delete_box
+            command = self.confirm_delete_box
         )
         self.delete_btn.grid(
             column = 2,
@@ -128,7 +129,17 @@ class WordEntryBox:
         )
 
         self.refresh_pos()
-    
+
+    def confirm_delete_box(self):
+        """Pops up a dialog confirming that a word box is to be deleted.
+        Deletes the box by calling self.delete_box() if the user agrees"""
+            
+        if (messagebox.askokcancel(
+            "Confirm Deletion",
+            "Deleting this box cannot be undone. Do you want to proceed?"
+        )):
+            self.delete_box()
+
     def delete_box(self):
 
         # Destroys this box's main frame
