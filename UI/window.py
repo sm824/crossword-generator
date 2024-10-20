@@ -1,6 +1,7 @@
 import tkinter as tk
 from library import *
 import UI.word_entry_box
+import key_entry
 
 class MainWindow:
 
@@ -8,7 +9,8 @@ class MainWindow:
 
         self.window_mode = "options"
         self.main_color = "#%02x%02x%02x" % RGB_colors  # Converts RGB to HEX colors
-        self.entered_words = []
+        self.entered_word_boxes = []
+        self.entered_word_objects = []
 
         self.root = tk.Tk()
         self.root.title("Crossword Generator")
@@ -35,7 +37,7 @@ class MainWindow:
             font = UI_FONT,
             cursor = "hand2",
             height = 2,
-            #command = 
+            command = self.run_crossword
         )
         self.padded_grid(self.generate_btn, 0, 0)
 
@@ -52,27 +54,44 @@ class MainWindow:
         )
 
         UI.word_entry_box.WordEntryBox.box_color = self.main_color
-        UI.word_entry_box.WordEntryBox.box_collection = self.entered_words
+        UI.word_entry_box.WordEntryBox.box_collection = self.entered_word_boxes
         UI.word_entry_box.WordEntryBox.box_frame = self.entries_frame
 
     def run_crossword(self):
 
-        pass
+        # Saves word entries as key_entry objects before their boxes are destroyed
+        for this_word_entry in self.entered_word_boxes:
+            self.entered_word_objects.append(
+                key_entry.KeyEntry(
+                    this_word_entry.word_entry.get(),
+                    this_word_entry.definition_entry.get("1.0")  # Argument required for text box (tk.Text)
+                )
+            )
+
+        # Iterates over and deletes all the previous widgets
+        for this_widget in self.root.winfo_children():
+            this_widget.destroy()
+        
+        for i in self.entered_word_objects:
+            print(f"{i.word} = {i.definition}")
+
+        # Sets up the new UI, where the generated crossword will be displayed
 
         # Sizes the window to the proper dimensions to fit the crossword
+        self.root.geometry("800x800")
     
     def add_word_entry(self):
 
-        placement_row = len(self.entered_words)
+        placement_row = len(self.entered_word_boxes)
         
-        self.entered_words.append(
+        self.entered_word_boxes.append(
             UI.word_entry_box.WordEntryBox(
                 placement_row = placement_row,
                 master = self.entries_frame
             )
         )
 
-        print(self.entered_words)
+        print(self.entered_word_boxes)
 
     def padded_grid(self, widget, column, row):
         widget.grid(
