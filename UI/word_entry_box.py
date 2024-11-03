@@ -19,7 +19,9 @@ class WordEntryBox:
             master = master,
             bg = WordEntryBox.box_color,  # Makes the background match the class's set color
             width = WordEntryBox.BOX_WIDTH,
-            height = WordEntryBox.BOX_HEIGHT
+            height = WordEntryBox.BOX_HEIGHT,
+            relief = "raised",
+            borderwidth = UI_BORDERWIDTH
         )
 
         # Stores this box's index in the collection it is located

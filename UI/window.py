@@ -44,7 +44,9 @@ class MainWindow:
         # Creates and adds the frame for the word entry widgets to sit in
         self.entries_frame = tk.Frame(
             bg = "white",
-            cursor = "hand2"
+            cursor = "hand2",
+            relief = "sunken",
+            borderwidth = UI_BORDERWIDTH
         )
         self.entries_frame.grid(
             column = 0,
@@ -57,6 +59,27 @@ class MainWindow:
         UI.word_entry_box.WordEntryBox.box_collection = self.entered_word_boxes
         UI.word_entry_box.WordEntryBox.box_frame = self.entries_frame
 
+    def create_option_btn(self, text, command):
+
+        return tk.Button(
+            master = self.options_frame,
+            text = text,
+            command = command,
+            font = (UI_FONT[0], 12)
+        )
+
+    def export_pdf(self):
+        pass
+
+    def edit_words():
+        pass
+
+    def get_hint():
+        pass
+    
+    def view_answer_key():
+        pass
+
     def run_crossword(self):
 
         # Saves word entries as key_entry objects before their boxes are destroyed
@@ -64,7 +87,7 @@ class MainWindow:
             self.entered_word_objects.append(
                 key_entry.KeyEntry(
                     this_word_entry.word_entry.get(),
-                    this_word_entry.definition_entry.get("1.0")  # Argument required for text box (tk.Text)
+                    this_word_entry.definition_entry.get("1.0", "end-1c")  # Argument required for text box (tk.Text)
                 )
             )
 
@@ -76,9 +99,68 @@ class MainWindow:
             print(f"{i.word} = {i.definition}")
 
         # Sets up the new UI, where the generated crossword will be displayed
+        self.options_frame = tk.Frame(
+            master = self.root,
+            bg = "grey",
+            relief = "sunken",
+            width = 250,
+            height = 70,
+            borderwidth = UI_BORDERWIDTH
+        )
+        self.options_frame.grid(row=0, column=0)
+
+        # Creates the option buttons that sit at the window's top
+        self.option_buttons = {
+            "Export PDF": self.create_option_btn("Export PDF", self.export_pdf),
+            "Edit Words": self.create_option_btn("Edit Words", self.edit_words),  # This requires the crossword be re-generated, and it may look different
+            "Get Hint": self.create_option_btn("Get Hint", self.get_hint),
+            "View Answer Key": self.create_option_btn("View Answer Key", self.view_answer_key)
+        }
+
+        # Adds the above created option buttons to the window
+        for this_button_obj in range(len(self.option_buttons)):
+            list(
+                self.option_buttons.items())[this_button_obj][1].grid(
+                    column = this_button_obj,
+                    row = 0,
+                    padx =  UI_PADDING / 2,
+                    pady = UI_PADDING / 2
+                )
+
+        # The canvas widget that holds the generated crossword
+        self.crossword_canvas = tk.Canvas(
+            master = self.root,
+            bg = "white",
+            relief = "sunken",
+            borderwidth = UI_BORDERWIDTH,
+            width = 1000,
+            height = 800
+        )
+        self.crossword_canvas.grid(
+            column = 0,
+            row = 1,
+            pady = UI_PADDING,
+            padx = UI_PADDING
+        )
+
+        # The frame widget to hold the key (word definitions)
+        self.definitions_frame = tk.Frame(
+            master = self.root,
+            relief = "sunken",
+            borderwidth = UI_BORDERWIDTH,
+            width = 200,
+            height = 865
+        )
+        self.definitions_frame.grid(
+            column = 2,
+            row = 0,
+            rowspan = 2,
+            pady = UI_PADDING,
+            padx = UI_PADDING
+        )
 
         # Sizes the window to the proper dimensions to fit the crossword
-        self.root.geometry("800x800")
+        self.root.geometry("1256x888")
     
     def add_word_entry(self):
 

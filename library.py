@@ -17,6 +17,7 @@ KEY_WIDTH = 40  # The number of characters long each row of definition text is a
 UI_FONT = ("Cascadia Mono", 18)
 UI_BORDERWIDTH = 4
 UI_PADDING = 10
+UI_BORDERWIDTH = 4
 
 # The options for the user to choose from when prompted to perform an action on the generated crossword
 USER_ACTIONS = (
