@@ -2,6 +2,8 @@ import tkinter as tk
 from library import *
 import UI.word_entry_box
 import key_entry
+import crossword_grid
+import random
 
 class MainWindow:
 
@@ -15,6 +17,8 @@ class MainWindow:
         self.root = tk.Tk()
         self.root.title("Crossword Generator")
         self.root.config(bg = self.main_color)
+
+        self.key = None
     
     def run_options(self):
 
@@ -90,6 +94,19 @@ class MainWindow:
                     this_word_entry.definition_entry.get("1.0", "end-1c")  # Argument required for text box (tk.Text)
                 )
             )
+
+        key_entry.KeyEntry.collection = self.entered_word_objects
+        crossword_grids = generate_crossword(self.entered_word_objects)
+
+        # TEMPORARY TESTING LOOPS
+        for this_grid in crossword_grids:
+            print("\n\n")
+
+            for this_col in this_grid:
+                print()
+                for this_row in this_col:
+                    print(this_row, end=" ")
+        print("\n\n")
 
         # Iterates over and deletes all the previous widgets
         for this_widget in self.root.winfo_children():

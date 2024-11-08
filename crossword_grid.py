@@ -6,7 +6,7 @@ Date: 2024-01-29
 Purpose: This is a file to hold the classes CrosswordGrid and CrossowrdList, which is a subclass of list that has been made more suitable for storing the crossword grids generated in this project
 ****************************************************************************************************
 """
-from library import *
+import library  # This CANNOT be replaced with 'from library import *', because library.py imports this file
 
 
 
@@ -121,7 +121,7 @@ class CrosswordGrid(list):
             # Adding rows to the top or bottom of self
             if orientation == "vertical":
 
-                adding_row = [BLANK_CHAR for i in range(len(self[0]))]  # A row template to be copied onto self
+                adding_row = [library.BLANK_CHAR for i in range(len(self[0]))]  # A row template to be copied onto self
 
                 # Adding rows to the BOTTOM of self
                 if direction == 1:
@@ -142,11 +142,11 @@ class CrosswordGrid(list):
 
                     # Adding rows to the RIGHT of self
                     if direction == 1:
-                        self[this_column].append(BLANK_CHAR)
+                        self[this_column].append(library.BLANK_CHAR)
             
                     # Adding rows to the LEFT of self
                     else:
-                        self[this_column].insert(0, BLANK_CHAR)
+                        self[this_column].insert(0, library.BLANK_CHAR)
 
     
 
@@ -262,7 +262,7 @@ class CrosswordGrid(list):
             for y in range(len(crossword_grids[this_grid_number])):
                 for x in range(len(crossword_grids[this_grid_number][y])):
 
-                    if crossword_grids[this_grid_number][y][x] == BLANK_CHAR:  # If this space is empty (BLANK_CHAR is used to denote an empty space)
+                    if crossword_grids[this_grid_number][y][x] == library.BLANK_CHAR:  # If this space is empty (BLANK_CHAR is used to denote an empty space)
                         full_crossword[y] += string_padding
 
                     else:  # If this position holds a letter
