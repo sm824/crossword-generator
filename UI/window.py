@@ -71,13 +71,13 @@ class MainWindow:
     def export_pdf(self):
         pass
 
-    def edit_words():
+    def edit_words(self):
         pass
 
-    def get_hint():
+    def get_hint(self):
         pass
     
-    def view_answer_key():
+    def view_answer_key(self):
         pass
 
     def run_crossword(self):
